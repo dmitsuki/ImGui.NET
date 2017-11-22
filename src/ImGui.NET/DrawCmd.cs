@@ -33,4 +33,5 @@ namespace ImGuiNET
         /// </summary>
         public IntPtr UserCallbackData;
     };
+
 }

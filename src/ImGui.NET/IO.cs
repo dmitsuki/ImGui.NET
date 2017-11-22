@@ -18,6 +18,24 @@ namespace ImGuiNET
         }
 
         public NativeIO* GetNativePointer() => _nativePtr;
+        
+        public unsafe bool MouseDrawCursor
+        {
+            get { return _nativePtr->MouseDrawCursor == 1; }
+            set { _nativePtr->MouseDrawCursor = value ? (byte)1 : (byte)0; }
+        }
+
+        public float KeyRepeatDelay
+        {
+            get { return _nativePtr->KeyRepeatDelay; }
+            set { _nativePtr->KeyRepeatDelay = value; }
+        }
+
+        public float KeyRepeatRate
+        {
+            get{ return _nativePtr->KeyRepeatDelay; }
+            set{ _nativePtr->KeyRepeatRate = value; }
+        }
 
         /// <summary>
         /// Display size, in pixels. For clamping windows positions.
@@ -268,6 +286,12 @@ namespace ImGuiNET
         public Font AddFontFromFileTTF(string fileName, float pixelSize)
         {
             NativeFont* nativeFontPtr = ImGuiNative.ImFontAtlas_AddFontFromFileTTF(_atlasPtr, fileName, pixelSize, IntPtr.Zero, null);
+            return new Font(nativeFontPtr);
+        }
+
+        public Font AddFontFromFileTTF(string fileName, float pixelSize, IntPtr fontConfig)
+        {
+            NativeFont* nativeFontPtr = ImGuiNative.ImFontAtlas_AddFontFromFileTTF(_atlasPtr, fileName, pixelSize, fontConfig, null);
             return new Font(nativeFontPtr);
         }
 

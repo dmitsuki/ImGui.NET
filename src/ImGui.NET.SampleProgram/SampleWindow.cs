@@ -24,7 +24,7 @@ namespace ImGuiNET
         private float _sliderVal;
         private System.Numerics.Vector4 _buttonColor = new System.Numerics.Vector4(55f / 255f, 155f / 255f, 1f, 1f);
         private bool _mainWindowOpened;
-        private static double s_desiredFrameLength = 1f / 60.0f;
+        private static double s_desiredFrameLength = 1f / 120.0f;
         private DateTime _previousFrameStartTime;
         private float _scaleFactor;
         private System.Numerics.Vector3 _positionValue = new System.Numerics.Vector3(500);
@@ -50,7 +50,7 @@ namespace ImGuiNET
             _nativeWindow.KeyUp += OnKeyUp;
             _nativeWindow.KeyPress += OnKeyPress;
 
-            ImGui.GetIO().FontAtlas.AddDefaultFont();
+            //ImGui.GetIO().FontAtlas.AddDefaultFont();
 
             SetOpenTKKeyMappings();
 
@@ -144,7 +144,7 @@ namespace ImGuiNET
                 PixelFormat.Alpha,
                 PixelType.UnsignedByte,
                 new IntPtr(texData.Pixels));
-
+                
             // Store the texture identifier in the ImFontAtlas substructure.
             io.FontAtlas.SetTexID(s_fontTexture);
 
@@ -183,14 +183,16 @@ namespace ImGuiNET
         {
             IO io = ImGui.GetIO();
             io.DisplaySize = new System.Numerics.Vector2(_nativeWindow.Width, _nativeWindow.Height);
-            io.DisplayFramebufferScale = new System.Numerics.Vector2(_scaleFactor);
+            io.DisplayFramebufferScale = new System.Numerics.Vector2(1, 1);//_scaleFactor);
             io.DeltaTime = (1f / 60f);
 
             UpdateImGuiInput(io);
 
             ImGui.NewFrame();
 
-            SubmitImGuiStuff();
+            bool okay = true; 
+            //SubmitImGuiStuff();
+            ImGui.ShowTestWindow(ref okay); 
 
             ImGui.Render();
 
@@ -200,7 +202,7 @@ namespace ImGuiNET
 
         private unsafe void SubmitImGuiStuff()
         {
-            ImGui.GetStyle().WindowRounding = 0;
+            //ImGui.GetStyle().WindowRounding = 0;
 
             ImGui.SetNextWindowSize(new System.Numerics.Vector2(_nativeWindow.Width - 10, _nativeWindow.Height - 20), Condition.Always);
             ImGui.SetNextWindowPosCenter(Condition.Always);
@@ -216,6 +218,12 @@ namespace ImGuiNET
                 ImGui.EndMenu();
             }
             ImGui.EndMainMenuBar();
+            ImGui.GetIO().MouseDrawCursor = true; 
+
+            bool totesRemotes = true;
+            ImGui.ShowTestWindow(ref totesRemotes); 
+
+            ImGui.BeginWindow("ImGUI.NET Sample Program", ref _mainWindowOpened, WindowFlags.Default);
 
             ImGui.Text("Hello,");
             ImGui.Text("World!");
@@ -314,6 +322,7 @@ namespace ImGuiNET
             return 0;
         }
 
+
         private unsafe void UpdateImGuiInput(IO io)
         {
             MouseState cursorState = Mouse.GetCursorState();
@@ -322,13 +331,14 @@ namespace ImGuiNET
             if (_nativeWindow.Focused)
             {
                 Point windowPoint = _nativeWindow.PointToClient(new Point(cursorState.X, cursorState.Y));
-                io.MousePosition = new System.Numerics.Vector2(windowPoint.X / io.DisplayFramebufferScale.X, windowPoint.Y / io.DisplayFramebufferScale.Y);
+                //io.MousePosition = new System.Numerics.Vector2(windowPoint.X / io.DisplayFramebufferScale.X, windowPoint.Y / io.DisplayFramebufferScale.Y);
+                io.MousePosition = new System.Numerics.Vector2(windowPoint.X , windowPoint.Y);
             }
             else
             {
                 io.MousePosition = new System.Numerics.Vector2(-1f, -1f);
             }
-
+            */
             io.MouseDown[0] = mouseState.LeftButton == ButtonState.Pressed;
             io.MouseDown[1] = mouseState.RightButton == ButtonState.Pressed;
             io.MouseDown[2] = mouseState.MiddleButton == ButtonState.Pressed;

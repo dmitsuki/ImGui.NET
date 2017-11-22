@@ -7,6 +7,11 @@ namespace ImGuiNET
 {
     public static class ImGui
     {
+        public static void ShowTestWindow(ref bool show)
+        {
+            ImGuiNative.igShowTestWindow(ref show); 
+        }
+
         public static void NewFrame()
         {
             ImGuiNative.igNewFrame();
@@ -1083,7 +1088,17 @@ namespace ImGuiNET
             ImGuiNative.igSetTooltip(text);
         }
 
-        public static void SetNextTreeNodeOpen(bool opened)
+        public static void BeginTooltip()
+        {
+            ImGuiNative.igBeginTooltip(); 
+        }
+
+        public static void EndTooltip()
+        {
+            ImGuiNative.igEndTooltip(); 
+        }
+
+        public static void SetNextTreeNodeOpened(bool opened)
         {
             ImGuiNative.igSetNextTreeNodeOpen(opened, Condition.Always);
         }

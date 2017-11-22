@@ -63,6 +63,7 @@ namespace ImGuiNET
                 return;
             }
 
+
             float line_height = ImGuiNative.igGetTextLineHeight();
             int line_total_count = (mem_size + Rows - 1) / Rows;
 
