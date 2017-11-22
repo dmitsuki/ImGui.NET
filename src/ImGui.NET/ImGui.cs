@@ -181,15 +181,15 @@ namespace ImGuiNET
             return ImGuiNative.igCombo(label, ref current_item, items, items.Length, heightInItems);
         }
 
-        public static bool ColorButton(Vector4 color, bool smallHeight, bool outlineBorder)
+        public static bool ColorButton(string desc_id, Vector4 color, ColorEditFlags flags, Vector2 size)
         {
-            return ImGuiNative.igColorButton(color, smallHeight, outlineBorder);
+            return ImGuiNative.igColorButton(desc_id, color, flags, size);
         }
 
-        public static unsafe bool ColorEdit3(string label, ref float r, ref float g, ref float b, bool showAlpha)
+        public static unsafe bool ColorEdit3(string label, ref float r, ref float g, ref float b, ColorEditFlags flags = ColorEditFlags.Default)
         {
             Vector3 localColor = new Vector3(r, g, b);
-            bool result = ImGuiNative.igColorEdit3(label, &localColor);
+            bool result = ImGuiNative.igColorEdit3(label, &localColor, flags);
             if (result)
             {
                 r = localColor.X;
@@ -200,10 +200,10 @@ namespace ImGuiNET
             return result;
         }
 
-        public static unsafe bool ColorEdit3(string label, ref Vector3 color, bool showAlpha)
+        public static unsafe bool ColorEdit3(string label, ref Vector3 color, ColorEditFlags flags = ColorEditFlags.Default)
         {
             Vector3 localColor = color;
-            bool result = ImGuiNative.igColorEdit3(label, &localColor);
+            bool result = ImGuiNative.igColorEdit3(label, &localColor, flags);
             if (result)
             {
                 color = localColor;
@@ -212,10 +212,10 @@ namespace ImGuiNET
             return result;
         }
 
-        public static unsafe bool ColorEdit4(string label, ref float r, ref float g, ref float b, ref float a, bool showAlpha)
+        public static unsafe bool ColorEdit4(string label, ref float r, ref float g, ref float b, ref float a, ColorEditFlags flags = ColorEditFlags.Default)
         {
             Vector4 localColor = new Vector4(r, g, b, a);
-            bool result = ImGuiNative.igColorEdit4(label, &localColor, showAlpha);
+            bool result = ImGuiNative.igColorEdit4(label, &localColor, flags);
             if (result)
             {
                 r = localColor.X;
@@ -227,10 +227,10 @@ namespace ImGuiNET
             return result;
         }
 
-        public static unsafe bool ColorEdit4(string label, ref Vector4 color, bool showAlpha)
+        public static unsafe bool ColorEdit4(string label, ref Vector4 color, ColorEditFlags flags = ColorEditFlags.Default)
         {
             Vector4 localColor = color;
-            bool result = ImGuiNative.igColorEdit4(label, &localColor, showAlpha);
+            bool result = ImGuiNative.igColorEdit4(label, &localColor, flags);
             if (result)
             {
                 color = localColor;
@@ -239,9 +239,26 @@ namespace ImGuiNET
             return result;
         }
 
-        public static void ColorEditMode(ColorEditMode mode)
+        public static unsafe bool ColorPicker3(string label, ref Vector3 color, ColorEditFlags flags = ColorEditFlags.Default)
         {
-            ImGuiNative.igColorEditMode(mode);
+            Vector3 localColor = color;
+            bool result = ImGuiNative.igColorPicker3(label, &localColor, flags);
+            if (result)
+            {
+                color = localColor;
+            }
+            return result;
+        }
+
+        public static unsafe bool ColorPicker4(string label, ref Vector4 color, ColorEditFlags flags = ColorEditFlags.Default)
+        {
+            Vector4 localColor = color;
+            bool result = ImGuiNative.igColorPicker4(label, &localColor, flags);
+            if (result)
+            {
+                color = localColor;
+            }
+            return result;
         }
 
         public unsafe static void PlotLines(
@@ -416,7 +433,7 @@ namespace ImGuiNET
             return ImGuiNative.igButton(message, size);
         }
 
-        public static void SetNextWindowSize(Vector2 size, SetCondition condition)
+        public static void SetNextWindowSize(Vector2 size, Condition condition)
         {
             ImGuiNative.igSetNextWindowSize(size, condition);
         }
@@ -426,12 +443,12 @@ namespace ImGuiNET
             ImGuiNative.igSetNextWindowFocus();
         }
 
-        public static void SetNextWindowPos(Vector2 position, SetCondition condition)
+        public static void SetNextWindowPos(Vector2 position, Condition condition)
         {
             ImGuiNative.igSetNextWindowPos(position, condition);
         }
 
-        public static void SetNextWindowPosCenter(SetCondition condition)
+        public static void SetNextWindowPosCenter(Condition condition)
         {
             ImGuiNative.igSetNextWindowPosCenter(condition);
         }
@@ -488,7 +505,7 @@ namespace ImGuiNET
         }
 
 
-        public static void SetWindowSize(Vector2 size, SetCondition cond = 0)
+        public static void SetWindowSize(Vector2 size, Condition cond = 0)
         {
             ImGuiNative.igSetWindowSize(size, cond);
         }
@@ -511,6 +528,16 @@ namespace ImGuiNET
             return ImGuiNative.igBegin2(windowTitle, ref opened, new Vector2(), backgroundAlpha, flags);
         }
 
+        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, WindowFlags flags)
+        {
+            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, 1f, flags);
+        }
+        
+        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, float backgroundAlpha, WindowFlags flags)
+        {
+            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, backgroundAlpha, flags);
+        }
+
         public static bool BeginMenu(string label)
         {
             return ImGuiNative.igBeginMenu(label, true);
@@ -531,11 +558,6 @@ namespace ImGuiNET
             ImGuiNative.igCloseCurrentPopup();
         }
 
-        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, WindowFlags flags)
-        {
-            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, 1f, flags);
-        }
-
         public static void EndMenuBar()
         {
             ImGuiNative.igEndMenuBar();
@@ -544,11 +566,6 @@ namespace ImGuiNET
         public static void EndMenu()
         {
             ImGuiNative.igEndMenu();
-        }
-
-        public static bool BeginWindow(string windowTitle, ref bool opened, Vector2 startingSize, float backgroundAlpha, WindowFlags flags)
-        {
-            return ImGuiNative.igBegin2(windowTitle, ref opened, startingSize, backgroundAlpha, flags);
         }
 
         public static void Separator()
@@ -712,14 +729,14 @@ namespace ImGuiNET
             return ImGuiNative.igIsMouseReleased(button);
         }
 
-        public static bool IsMouseHoveringWindow()
+        public static bool IsWindowRectHovered()
         {
-            return ImGuiNative.igIsMouseHoveringWindow();
+            return ImGuiNative.igIsWindowRectHovered();
         }
 
-        public static bool IsMouseHoveringAnyWindow()
+        public static bool IsAnyWindowHovered()
         {
-            return ImGuiNative.igIsMouseHoveringAnyWindow();
+            return ImGuiNative.igIsAnyWindowHovered();
         }
 
         public static bool IsWindowFocused()
@@ -884,22 +901,26 @@ namespace ImGuiNET
 
         public static bool BeginPopupModal(string name)
         {
-            return ImGuiNative.igBeginPopupModal(name, WindowFlags.Default);
-        }
-
-        public static bool BeginPopupModal(string name, WindowFlags extraFlags)
-        {
-            return ImGuiNative.igBeginPopupModal(name, extraFlags);
+            return BeginPopupModal(name, WindowFlags.Default);
         }
 
         public static bool BeginPopupModal(string name, ref bool opened)
         {
-            return ImGuiNative.igBeginPopupModal(name, ref opened, WindowFlags.Default);
+            return BeginPopupModal(name, ref opened, WindowFlags.Default);
         }
 
-        public static bool BeginPopupModal(string name, ref bool opened, WindowFlags extraFlags)
+        public static unsafe bool BeginPopupModal(string name, WindowFlags extra_flags)
         {
-            return ImGuiNative.igBeginPopupModal(name, ref opened, extraFlags);
+            return ImGuiNative.igBeginPopupModal(name, null, extra_flags);
+        }
+
+        public static unsafe bool BeginPopupModal(string name, ref bool p_opened, WindowFlags extra_flags)
+        {
+            byte value = p_opened ? (byte)1 : (byte)0;
+            bool result = ImGuiNative.igBeginPopupModal(name, &value, extra_flags);
+
+            p_opened = value == 1 ? true : false;
+            return result;
         }
 
         public static bool Selectable(string label, bool isSelected, SelectableFlags flags)
@@ -952,6 +973,11 @@ namespace ImGuiNET
             ImGuiNative.igEndPopup();
         }
 
+        public static bool IsPopupOpen(string id)
+        {
+            return ImGuiNative.igIsPopupOpen(id);
+        }
+
         public static unsafe void Dummy(Vector2 size)
         {
             ImGuiNative.igDummy(&size);
@@ -992,6 +1018,11 @@ namespace ImGuiNET
             return ImGuiNative.igGetColumnWidth(columnIndex);
         }
 
+        public static void SetColumnWidth(int columnIndex, float width)
+        {
+            ImGuiNative.igSetColumnWidth(columnIndex, width);
+        }
+
         public static int GetColumnsCount()
         {
             return ImGuiNative.igGetColumnsCount();
@@ -1022,9 +1053,9 @@ namespace ImGuiNET
             return ImGuiNative.igIsItemHovered();
         }
 
-        public static bool IsLastItemHoveredRect()
+        public static bool IsItemRectHovered()
         {
-            return ImGuiNative.igIsItemHoveredRect();
+            return ImGuiNative.igIsItemRectHovered();
         }
 
         public static bool IsLastItemActive()
@@ -1052,19 +1083,24 @@ namespace ImGuiNET
             ImGuiNative.igSetTooltip(text);
         }
 
-        public static void SetNextTreeNodeOpened(bool opened)
+        public static void SetNextTreeNodeOpen(bool opened)
         {
-            ImGuiNative.igSetNextTreeNodeOpened(opened, SetCondition.Always);
+            ImGuiNative.igSetNextTreeNodeOpen(opened, Condition.Always);
         }
 
-        public static void SetNextTreeNodeOpened(bool opened, SetCondition setCondition)
+        public static void SetNextTreeNodeOpen(bool opened, Condition setCondition)
         {
-            ImGuiNative.igSetNextTreeNodeOpened(opened, setCondition);
+            ImGuiNative.igSetNextTreeNodeOpen(opened, setCondition);
         }
 
         public static bool TreeNode(string label)
         {
             return ImGuiNative.igTreeNode(label);
+        }
+
+        public static bool TreeNodeEx(string label, TreeNodeFlags flags = 0)
+        {
+            return ImGuiNative.igTreeNodeEx(label, flags);
         }
 
         public static void TreePop()

@@ -9,6 +9,7 @@
         TextDisabled,
         WindowBg,
         ChildWindowBg,
+        PopupBg,
         Border,
         BorderShadow,
         /// <summary>
@@ -35,9 +36,9 @@
         Header,
         HeaderHovered,
         HeaderActive,
-        Column,
-        ColumnHovered,
-        ColumnActive,
+        Separator,
+        SeparatorHovered,
+        SeparatorActive,
         ResizeGrip,
         ResizeGripHovered,
         ResizeGripActive,
@@ -49,7 +50,6 @@
         PlotHistogram,
         PlotHistogramHovered,
         TextSelectedBg,
-        TooltipBg,
         /// <summary>
         /// darken entire screen when a modal window is active
         /// </summary>
