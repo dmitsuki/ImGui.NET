@@ -128,6 +128,11 @@ namespace ImGuiNET
             return ImGuiNative.igInvisibleButton(id, size);
         }
 
+        public static void AlignFirstTextHeightToWidgets()
+        {
+            ImGuiNative.igAlignFirstTextHeightToWidgets(); 
+        }
+
         public static void Image(IntPtr userTextureID, Vector2 size, Vector2 uv0, Vector2 uv1, Vector4 tintColor, Vector4 borderColor)
         {
             ImGuiNative.igImage(userTextureID, size, uv0, uv1, tintColor, borderColor);

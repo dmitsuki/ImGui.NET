@@ -338,7 +338,7 @@ namespace ImGuiNET
             {
                 io.MousePosition = new System.Numerics.Vector2(-1f, -1f);
             }
-            */
+            
             io.MouseDown[0] = mouseState.LeftButton == ButtonState.Pressed;
             io.MouseDown[1] = mouseState.RightButton == ButtonState.Pressed;
             io.MouseDown[2] = mouseState.MiddleButton == ButtonState.Pressed;
