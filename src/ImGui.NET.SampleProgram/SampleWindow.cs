@@ -191,7 +191,7 @@ namespace ImGuiNET
             ImGui.NewFrame();
 
             bool okay = true; 
-            //SubmitImGuiStuff();
+            SubmitImGuiStuff();
             ImGui.ShowTestWindow(ref okay); 
 
             ImGui.Render();
@@ -412,7 +412,7 @@ namespace ImGuiNET
                 GL.VertexPointer(2, VertexPointerType.Float, sizeof(DrawVert), new IntPtr(vtx_buffer + DrawVert.PosOffset));
                 GL.TexCoordPointer(2, TexCoordPointerType.Float, sizeof(DrawVert), new IntPtr(vtx_buffer + DrawVert.UVOffset));
                 GL.ColorPointer(4, ColorPointerType.UnsignedByte, sizeof(DrawVert), new IntPtr(vtx_buffer + DrawVert.ColOffset));
-
+                Console.WriteLine(new IntPtr(vtx_buffer + DrawVert.PosOffset)); 
                 for (int cmd_i = 0; cmd_i < cmd_list->CmdBuffer.Size; cmd_i++)
                 {
                     DrawCmd* pcmd = &(((DrawCmd*)cmd_list->CmdBuffer.Data)[cmd_i]);
@@ -428,8 +428,8 @@ namespace ImGuiNET
                             (int)(io.DisplaySize.Y - pcmd->ClipRect.W),
                             (int)(pcmd->ClipRect.Z - pcmd->ClipRect.X),
                             (int)(pcmd->ClipRect.W - pcmd->ClipRect.Y));
-                        ushort[] indices = new ushort[pcmd->ElemCount];
-                        for (int i = 0; i < indices.Length; i++) { indices[i] = idx_buffer[i]; }
+                        //ushort[] indices = new ushort[pcmd->ElemCount];
+                        //for (int i = 0; i < indices.Length; i++) { indices[i] = idx_buffer[i]; }
                         GL.DrawElements(PrimitiveType.Triangles, (int)pcmd->ElemCount, DrawElementsType.UnsignedShort, new IntPtr(idx_buffer));
                     }
                     idx_buffer += pcmd->ElemCount;
