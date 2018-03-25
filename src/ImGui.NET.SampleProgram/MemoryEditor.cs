@@ -68,7 +68,7 @@ namespace ImGuiNET
             int line_total_count = (mem_size + Rows - 1) / Rows;
 
             ImGuiNative.igSetNextWindowContentSize(new Vector2(0.0f, line_total_count * line_height));
-            ImGui.BeginChild("##scrolling", new Vector2(0, -ImGuiNative.igGetItemsLineHeightWithSpacing()), false, 0);
+            ImGui.BeginChild("##scrolling", new Vector2(0, -ImGuiNative.igGetFrameHeightWithSpacing()), false, 0);
 
             ImGui.PushStyleVar(StyleVar.FramePadding, new Vector2(0, 0));
             ImGui.PushStyleVar(StyleVar.ItemSpacing, new Vector2(0, 0));
@@ -163,7 +163,7 @@ namespace ImGuiNET
                     else
                     {
                         ImGui.Text(FixedHex(mem_data[addr], 2));
-                        if (AllowEdits && ImGui.IsLastItemHovered() && ImGui.IsMouseClicked(0))
+                        if (AllowEdits && ImGui.IsItemHovered(HoveredFlags.Default) && ImGui.IsMouseClicked(0))
                         {
                             DataEditingTakeFocus = true;
                             DataEditingAddr = addr;
@@ -198,7 +198,7 @@ namespace ImGuiNET
 
             ImGui.Separator();
                 
-            ImGuiNative.igAlignFirstTextHeightToWidgets();
+            ImGuiNative.igAlignTextToFramePadding();
             ImGui.PushItemWidth(50);
             ImGuiNative.igPushAllowKeyboardFocus(false);
             int rows_backup = Rows;

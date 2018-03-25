@@ -14,7 +14,7 @@ namespace ImGuiNET
 {
     public class SampleWindow
     {
-        private NativeWindow _nativeWindow;
+        private OpenTK.NativeWindow _nativeWindow;
         private GraphicsContext _graphicsContext;
         private int s_fontTexture;
         private int _pressCount;
@@ -35,7 +35,7 @@ namespace ImGuiNET
         public unsafe SampleWindow()
         {
             int desiredWidth = 960, desiredHeight = 540;
-            _nativeWindow = new NativeWindow(desiredWidth, desiredHeight, "ImGui.NET", GameWindowFlags.Default, OpenTK.Graphics.GraphicsMode.Default, DisplayDevice.Default);
+            _nativeWindow = new OpenTK.NativeWindow(desiredWidth, desiredHeight, "ImGui.NET", GameWindowFlags.Default, OpenTK.Graphics.GraphicsMode.Default, DisplayDevice.Default);
             _scaleFactor = _nativeWindow.Width / desiredWidth;
 
             GraphicsContextFlags flags = GraphicsContextFlags.Default;
@@ -205,7 +205,7 @@ namespace ImGuiNET
             //ImGui.GetStyle().WindowRounding = 0;
 
             ImGui.SetNextWindowSize(new System.Numerics.Vector2(_nativeWindow.Width - 10, _nativeWindow.Height - 20), Condition.Always);
-            ImGui.SetNextWindowPosCenter(Condition.Always);
+            ImGui.SetNextWindowPos(ImGui.GetIO().DisplaySize, Condition.Always, new System.Numerics.Vector2(1f));
             ImGui.BeginWindow("ImGUI.NET Sample Program", ref _mainWindowOpened, WindowFlags.NoResize | WindowFlags.NoTitleBar | WindowFlags.NoMove);
 
             ImGui.BeginMainMenuBar();
@@ -231,6 +231,8 @@ namespace ImGuiNET
             var pos = ImGui.GetIO().MousePosition;
             bool leftPressed = ImGui.GetIO().MouseDown[0];
             ImGui.Text("Current mouse position: " + pos + ". Pressed=" + leftPressed);
+
+            ImGui.ShowStyleSelector("Select style");
 
             if (ImGui.Button("Increment the counter."))
             {
@@ -305,6 +307,9 @@ namespace ImGuiNET
                 ImGui.Selectable("Just click somewhere to get rid of me.");
                 ImGui.EndPopup();
             }
+            
+            ImGui.Text("ProgressBar:");
+            ImGui.ProgressBar(0.5f, new System.Numerics.Vector2(300, 20), "50%");
 
             ImGui.EndWindow();
 
