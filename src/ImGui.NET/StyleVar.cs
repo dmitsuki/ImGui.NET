@@ -74,5 +74,6 @@
         /// System.Numerics.Vector2
         /// </summary>
         ButtonTextAlign,
+        DisplaySafeAreaPadding,
     };
 }

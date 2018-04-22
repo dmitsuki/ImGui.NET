@@ -7,9 +7,9 @@ namespace ImGuiNET
 {
     public static class ImGui
     {
-        public static void ShowTestWindow(ref bool show)
+        public static void ShowDemoWindow(ref bool show)
         {
-            ImGuiNative.igShowTestWindow(ref show); 
+            ImGuiNative.igShowDemoWindow(ref show); 
         }
 
         public static void NewFrame()
@@ -121,9 +121,11 @@ namespace ImGuiNET
             return ImGuiNative.igInvisibleButton(id, size);
         }
 
+        [Obsolete]
         public static void AlignFirstTextHeightToWidgets()
         {
-            ImGuiNative.igAlignFirstTextHeightToWidgets(); 
+            //ImGuiNative.igAlignFirstTextHeightToWidgets(); 
+            throw new Exception("obsolete"); 
         }
 
         public static void Image(IntPtr userTextureID, Vector2 size, Vector2 uv0, Vector2 uv1, Vector4 tintColor, Vector4 borderColor)

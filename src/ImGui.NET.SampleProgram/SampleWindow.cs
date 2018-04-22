@@ -192,7 +192,8 @@ namespace ImGuiNET
 
             bool okay = true; 
             SubmitImGuiStuff();
-            ImGui.ShowTestWindow(ref okay); 
+            //ImGui.ShowTestWindow(ref okay);
+            ImGui.ShowDemoWindow(ref okay); 
 
             ImGui.Render();
 
@@ -221,7 +222,8 @@ namespace ImGuiNET
             ImGui.GetIO().MouseDrawCursor = true; 
 
             bool totesRemotes = true;
-            ImGui.ShowTestWindow(ref totesRemotes); 
+            //ImGui.ShowTestWindow(ref totesRemotes); 
+
 
             ImGui.BeginWindow("ImGUI.NET Sample Program", ref _mainWindowOpened, WindowFlags.Default);
 
